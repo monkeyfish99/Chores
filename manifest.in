@@ -1,0 +1,3 @@
+graft chores/templates
+graft chores/static
+include chores/schema.sql

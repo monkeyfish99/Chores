@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="{{ url_for('edit_user', username=username) }}" method=post>
+    <dl>
+        <dt>New password:
+        <dd><input type=password name=password>
+        <dt>Confirm password:
+        <dd><input type=password name=confirm>
+        {% if session.admin %}
+            <dt>Admin?
+            <dd><input type=checkbox name="check" value="is_admin" {% if admin %}checked{% endif %}>
+        {% endif %}
+        <dd><input type=submit text="Edit User">
+    </dl>
+</form>
+{% endblock %}

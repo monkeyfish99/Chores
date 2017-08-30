@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('add_user') }}" method=post class=add-entry>
+        <dl>
+            <dt>Username:
+            <dd><input type=text size=30 name=username>
+            <dt>Password:
+            <dd><input type=password name=password id=password>
+            <dt>Confirm Password:
+            <dd><input type=password name=confirm id=confirm onkeyup="check();"><span id="message"></span>
+            <dt>Admin?
+            <dd><input type=checkbox name="check" value="is_admin" >
+            <dd><input type=submit text="Add User">
+        </dl>
+    </form>
+
+    <ul class=users>
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>Admin</th>
+        </tr>
+    {% for entry in users %}
+        <tr>
+            <td>{{ entry.username }}</td>
+            <td>{% if entry.Admin == 1 %} True {% else %} False {% endif %}</td>
+            <td><a href="{{ url_for('user_page', username=entry.username) }}">Edit User</a></td>
+            <td>{% if entry.root == 0 %}<a href="{{ url_for('delete_user', username=entry.username, confirm=False) }}">Delete User</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </ul>
+{% endblock %}
