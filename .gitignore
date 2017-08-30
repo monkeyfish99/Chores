@@ -60,3 +60,4 @@ ENV/
 
 #DB
 *.db
+secret_key.txt

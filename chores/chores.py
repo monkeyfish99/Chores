@@ -7,9 +7,12 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.config.from_object(__name__)
 
+with open("secret_key.txt") as f:
+    secret = f.read()
+
 app.config.update(dict(
     database = os.path.join(app.root_path, "chores.db"),
-    SECRET_KEY = os.urandom(32)
+    SECRET_KEY = secret
 ))
 app.config.from_envvar("chores_settings", silent=True)
 
@@ -122,9 +125,10 @@ def user_page(username):
         abort(401)
     if not session["admin"] and username != session["username"]:
         abort(401)
+    
     db = get_DB()
     data = db.execute("SELECT admin FROM users WHERE username = '%s'" % username).fetchall()[0][0]
-    return render_template("user.html", title="Edit "+username, admin=data)
+    return render_template("user.html", title="Edit "+username, user=username, admin=data)
     
 @app.route("/user/<username>/edit", methods=["POST"])
 def edit_user(username):
@@ -132,6 +136,21 @@ def edit_user(username):
         abort(401)
     if not session["admin"] and username != session["username"]:
         abort(401)
+        
+    if request.form["password"] != request.form["confirm"]:
+        return redirect(url_for("user_page", username=username))    
+    
+    db = get_DB()
+    root = db.execute("SELECT root FROM users WHERE username = '%s'" % username).fetchall()[0][0]
+    hash = bcrypt.generate_password_hash(request.form["password"])
+    if (request.form.getlist("check") and session["admin"]) or root == 1:
+        admin = True
+    else:
+        admin = False
+    db.execute("UPDATE users SET admin = ?, hash = ? WHERE username = '%s'" % username, [admin, hash])
+    db.commit()
+    flash("User has been added")
+    return redirect(url_for("user_page", username=username))
         
 @app.route("/user/<username>/delete")
 def delete_user(username):
