@@ -59,4 +59,4 @@ venv/
 ENV/
 
 #DB
-.db
+*.db
