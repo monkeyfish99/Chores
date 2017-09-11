@@ -142,12 +142,17 @@ def edit_user(username):
     
     db = get_DB()
     root = db.execute("SELECT root FROM users WHERE username = '%s'" % username).fetchall()[0][0]
-    hash = bcrypt.generate_password_hash(request.form["password"])
-    if (request.form.getlist("check") and session["admin"]) or root == 1:
-        admin = True
-    else:
-        admin = False
-    db.execute("UPDATE users SET admin = ?, hash = ? WHERE username = '%s'" % username, [admin, hash])
+    if request.form["password"] and request.form["confirm"]:
+        if request.form["password"] == request.form["confirm"]:
+            hash = bcrypt.generate_password_hash(request.form["password"])
+            db.execute("UPDATE users SET hash = ? WHERE username = '%s'" % username, [hash])
+        
+    if session["admin"] or root == 1:
+        if request.form.getlist("check") or root == 1:
+            db.execute("UPDATE users SET admin = 1 WHERE username = '%s'" % username)
+        else:
+            db.execute("UPDATE users SET admin = 0 WHERE username = '%s'" % username)
+    
     db.commit()
     flash("User has been added")
     return redirect(url_for("user_page", username=username))
