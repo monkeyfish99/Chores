@@ -1,3 +1,4 @@
 graft chores/templates
 graft chores/static
+graft chores/main
 include chores/schema.sql

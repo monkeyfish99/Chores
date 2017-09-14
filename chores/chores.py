@@ -2,8 +2,13 @@ import os
 import sqlite3
 from flask import Flask, session, request, g, redirect, url_for, abort, render_template, flash
 from flask_bcrypt import Bcrypt
+from chores.blueprints.main_pages import main_pages
+
 
 app = Flask(__name__)
+app.register_blueprint(main_pages)
+
+
 bcrypt = Bcrypt(app)
 app.config.from_object(__name__)
 
@@ -49,6 +54,8 @@ def close_DB(error):
     if hasattr(g, "sqlite_db"):
         g.sqlite_db.close()
         
+
+        
 @app.route("/adduser", methods=["POST"])
 def add_user():
     if not session.get("logged_in") and not session.get("admin"):
@@ -75,9 +82,7 @@ def show_admin():
     userlist = cur.fetchall()
     return render_template("admin.html", title="Admin Panel", users=userlist)
     
-@app.route("/")
-def index():
-    return render_template("index.html", title="Home")
+
     
 @app.route("/login", methods=["GET", "POST"])
 def login():
