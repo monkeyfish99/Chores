@@ -11,11 +11,11 @@
     </header>
     <div id="login">
         {% if session.logged_in %}
-            Logged in as: <a href="{{url_for('user_page', username=session.username) }}">{{ session.username }}</a><br />
-            {% if session.admin %}<a href="{{ url_for('show_admin') }}">Admin Page</a>{% endif %}
-            <a href="{{ url_for('logout') }}">Log Out</a>
+            Logged in as: <a href="{{url_for('user.user_page', username=session.username) }}">{{ session.username }}</a><br />
+            {% if session.admin %}<a href="{{ url_for('user.show_admin') }}">Admin Page</a>{% endif %}
+            <a href="{{ url_for('user.logout') }}">Log Out</a>
         {% else %}
-            <a href="{{ url_for('login') }}">Log In</a>
+            <a href="{{ url_for('user.login') }}">Log In</a>
         {% endif %}
     </div>
     <nav>

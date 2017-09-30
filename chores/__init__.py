@@ -1,1 +1,0 @@
-from .chores import app

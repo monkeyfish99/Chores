@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<form action="{{ url_for('edit_user', username=user) }}" method=post class=add-entry>
+<form action="{{ url_for('user.edit_user', username=user) }}" method=post class=add-entry>
     <dl>
         <dt>New password:
         <dd><input type=password name=password>

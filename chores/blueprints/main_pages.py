@@ -1,7 +1,12 @@
-from flask import Blueprint, render_template, abort
+'''Displays main pages
 
-main_pages = Blueprint("main_pages", __name__, template_folder="templates")
+TODO(Connor): Add more pages to this, not just index.
+TODO(Connor): Or migrate to chores.py.'''
+from flask import Blueprint, render_template
 
-@main_pages.route("/")
+MAIN_PAGES = Blueprint("main_pages", __name__, template_folder="templates")
+
+@MAIN_PAGES.route("/")
 def index():
-    return render_template("index.html", title="Home")
+  '''Displays index page.'''
+  return render_template("index.html", title="Home")
