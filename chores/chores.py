@@ -47,9 +47,9 @@ def init_db_command():
 
   data = DATABASE.get_db()
   hashed = BCRYPT.generate_password_hash("password")
-  insert = ["root", True, hashed, True]
+  insert = ["root", True, hashed, True, "[]"]
   data.execute(
-      "insert into users (username, admin, hash, root) values (?, ?, ?, ?)",
+      "insert into users (username, admin, hash, root, assignable) values (?, ?, ?, ?, ?)",
       insert
       )
   data.commit()
