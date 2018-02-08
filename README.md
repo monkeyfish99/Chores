@@ -1,4 +1,4 @@
-~~Chores~~
+## Chores
 
 THIS IS STILL VERY MUCH IN BETA
 Readme for internal use.
@@ -11,5 +11,5 @@ Set app with "set FLASK_APP=chores\chores.py"
 
 Run pylint with "pylint --rcfile=rcfile.cfg chores"
 
-~~Dev notes~~
+## Dev notes
 TIME in database is passed as hh:mm:ss
