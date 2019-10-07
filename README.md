@@ -1,6 +1,8 @@
 # Chores
 ## Forgive the lack of polish in this readme, it's still a greatly in-progress app, far from ready for a public release
 
+An application to track chores in a household, automatically assigning them based on time and frequency of the chore, with a full user profile system
+
 BETA APP
 Readme for development use.
 
